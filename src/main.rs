@@ -1,3 +1,12 @@
+use clap::Parser;
+
+#[derive(Debug, Parser)]
+struct Cli {
+    #[arg(short, long)]
+    asdf: String,
+}
+
 fn main() {
-    println!("Hello, world!");
+    let args = Cli::parse();
+    println!("{:#?}", args);
 }
