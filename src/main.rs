@@ -1,38 +1,26 @@
-// This is an example rewritten from the clap docs.
-// https://docs.rs/clap/latest/clap/_derive/_tutorial/chapter_0/index.html
+use clap::Parser;
+// use rtodo;
 
-use clap::{Parser, Subcommand};
-use std::path::PathBuf;
-
-#[derive(Debug, Parser)]
-#[command(author, version, about, long_about = None)]
-struct Cli {
-    /// Optional name to operate on
-    name: Option<String>,
-
-    /// Sets a custom config file
-    #[arg(short, long, value_name = "FILE")]
-    config: Option<PathBuf>,
-
-    /// Turn debugging information on
-    #[arg(short, long, action = clap::ArgAction::Count)]
-    debug: u8,
-
-    #[command(subcommand)]
-    command: Option<Commands>,
-}
-
-#[derive(Debug, Subcommand)]
-enum Commands {
-    /// does test thingy
-    Test {
-        /// lists test values
-        #[arg(short, long)]
-        list: bool,
-    },
-}
+mod cli;
 
 fn main() {
-    let args = Cli::parse();
+    let args = cli::Cli::parse();
     println!("{:#?}", args);
+
+    let mut db: Vec<String> = vec![];
+    db.push(String::from("hehe"));
+    db.push(String::from("asdf"));
+    db.push(String::from("fdsa"));
+
+    match &args.command {
+        cli::Commands::Show(arg) => match (arg.all, arg.todo) {
+            (true, false) => {
+                for row in db {
+                    println!("{:#?}", row);
+                }
+            }
+            (false, true) => println!("todo"),
+            _ => {}
+        },
+    }
 }
