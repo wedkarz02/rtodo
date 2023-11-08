@@ -1,11 +1,10 @@
 use clap::Parser;
-// use rtodo;
+use rtodo;
 
 mod cli;
 
 fn main() {
     let args = cli::Cli::parse();
-    println!("{:#?}", args);
 
     let mut db: Vec<String> = vec![];
     db.push(String::from("hehe"));
@@ -22,5 +21,10 @@ fn main() {
             (false, true) => println!("todo"),
             _ => {}
         },
+        cli::Commands::Init => {
+            if let Err(e) = rtodo::init_all() {
+                eprintln!("[ERROR]: {}", e);
+            }
+        }
     }
 }

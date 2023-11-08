@@ -10,6 +10,9 @@ pub struct Cli {
 
 #[derive(Debug, Subcommand)]
 pub enum Commands {
+    /// Initialize / clear application files
+    Init,
+
     /// Display TODO items
     Show(ShowArgs),
 }

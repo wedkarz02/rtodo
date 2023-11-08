@@ -1,3 +1,6 @@
+use dirs;
+use std::{fs, io, path::Path};
+
 #[derive(Debug)]
 pub struct Item {
     pub id: u32,
@@ -17,4 +20,21 @@ impl Item {
     }
 }
 
-// pub fn save_item(item: &Item, file_path: &str) -> Result<()>
+pub fn init_all() -> Result<(), io::Error> {
+    let mut dir_path = dirs::home_dir().expect("Home directory should exist");
+    dir_path.push(".rtodo");
+
+    if let Ok(_) = fs::create_dir(&dir_path) {
+        println!("[INFO]: ~/.rtodo directory created succesfully.");
+    } else {
+        println!("[INFO]: ~/.rtodo already exists. Clearing data...");
+    }
+
+    dir_path.push("items.txt");
+    let file_path = Path::new(&dir_path);
+
+    fs::write(file_path, "")?;
+    println!("[INFO]: ~/.rtodo/items.txt created succesfully.");
+
+    Ok(())
+}
