@@ -8,3 +8,4 @@ description = "Rusty TODO command line application."
 
 [dependencies]
 clap = { version = "4.4.7", features = ["derive"] }
+dirs = "5.0.1"
