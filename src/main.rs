@@ -8,7 +8,11 @@ mod cli;
 fn main() {
     let args = cli::Cli::parse();
 
-    let mut home_path = dirs::home_dir().expect("Home directory should exist");
+    let mut home_path = dirs::home_dir().unwrap_or_else(|| {
+        eprintln!("Home directory should exist");
+        std::process::exit(1);
+    });
+
     home_path.push(".rtodo/items.txt");
     let file_path = Path::new(&home_path);
 

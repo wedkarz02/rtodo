@@ -31,7 +31,11 @@ impl Item {
 }
 
 pub fn init_all() -> Result<(), io::Error> {
-    let mut home_path = dirs::home_dir().expect("Home directory should exist");
+    let mut home_path = dirs::home_dir().unwrap_or_else(|| {
+        eprintln!("Home directory should exist");
+        std::process::exit(1);
+    });
+
     home_path.push(".rtodo");
 
     if let Ok(_) = fs::create_dir(&home_path) {
