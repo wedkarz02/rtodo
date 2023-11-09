@@ -15,6 +15,9 @@ pub enum Commands {
 
     /// Display TODO items
     Show(ShowArgs),
+
+    /// Add an item to the TODO
+    Add(AddArgs),
 }
 
 #[derive(Args, Debug)]
@@ -24,4 +27,19 @@ pub struct ShowArgs {
 
     #[arg(long)]
     pub todo: bool,
+}
+
+#[derive(Args, Debug)]
+pub struct AddArgs {
+    /// Name of the TODO item
+    #[arg(long)]
+    pub name: String,
+
+    /// Optional deadline date
+    #[arg(long)]
+    pub deadline: Option<String>,
+
+    /// Optional item description
+    #[arg(long)]
+    pub desc: Option<String>,
 }
